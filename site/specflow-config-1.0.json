@@ -5,17 +5,8 @@
 
   Changelog:
 
-  3.1
-  - Added generator/disableFriendlyTestNames
-
-  3.0
-  - Added formatters
- 
-  1.1
-  - Added ide/bindingDiscovery
-
   1.0
-  - Initial Reqnroll configuration schema
+  - Initial SpecFlow configuration schema containing SpecFlow v3.9 settings and IDE settings
   
   */
 
@@ -23,7 +14,7 @@
   "additionalProperties": true,
   "properties": {
     "language": {
-      "description": "Use this section to define the default language for feature files and other language-related settings. For more details see https://go.reqnroll.net/doc-config#language",
+      "description": "Use this section to define the default language for feature files and other language-related settings. For more details see https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html#language",
       "type": "object",
       "additionalProperties": true,
       "properties": {
@@ -31,8 +22,15 @@
           "description": "The default language of feature files added to the project. We recommend using specific culture names (e.g.: \"en-US\") rather than generic (neutral) cultures (e.g.: \"en\").",
           "type": "string",
           "default": "en-US"
-        },
-        "binding": {
+        }
+      }
+    },
+    "bindingCulture": {
+      "description": "Use this section to define the culture for executing binding methods and converting step arguments. For more details see https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html#bindingculture",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
           "description": "Specifies the culture to be used to execute binding methods and convert step arguments. If not specified, the feature language is used. We recommend using specific culture names (e.g.: \"en-US\") rather than generic (neutral) cultures (e.g.: \"en\").",
           "type": "string",
           "default": "not specified"
@@ -40,7 +38,7 @@
       }
     },
     "generator": {
-      "description": "Use this section to define unit test generation options. For more details see https://go.reqnroll.net/doc-config#generator",
+      "description": "Use this section to define unit test generation options. For more details see https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html#generator",
       "type": "object",
       "additionalProperties": true,
       "properties": {
@@ -55,33 +53,28 @@
           "default": false
         },
         "addNonParallelizableMarkerForTags": {
-          "description": "Defines a set of tags, any of which specify that a feature should be excluded from running in parallel with any other feature. For mor details see https://go.reqnroll.net/doc-parallel-execution",
+          "description": "Defines a set of tags, any of which specify that a feature should be excluded from running in parallel with any other feature. For mor details see https://docs.specflow.org/projects/specflow/en/latest/Execution/Parallel-Execution.html",
           "type": "array",
           "default": [],
           "items": {
             "type": "string"
           }
-        },
-        "disableFriendlyTestNames": {
-          "description": "By default, Reqnroll generates friendly DisplayNames in test case attributes for supported frameworks. Disable this behavior by setting this option to \"true\".",
-          "type": "boolean",
-          "default": false
         }
       }
     },
     "runtime": {
-      "description": "Use this section to specify various test execution options. For more details see https://go.reqnroll.net/doc-config#runtime",
+      "description": "Use this section to specify various test execution options. For more details see https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html#runtime",
       "type": "object",
       "additionalProperties": true,
       "properties": {
         "missingOrPendingStepsOutcome": {
-          "description": "Determines how Reqnroll behaves if a step binding is not implemented or pending.",
+          "description": "Determines how SpecFlow behaves if a step binding is not implemented or pending.",
           "type": "string",
           "default": "Pending",
           "enum": [ "Pending", "Inconclusive", "Ignore", "Error" ]
         },
         "obsoleteBehavior": {
-          "description": "Determines how Reqnroll behaves if a step binding is marked with [Obsolete] attribute.",
+          "description": "Determines how SpecFlow behaves if a step binding is marked with [Obsolete] attribute.",
           "type": "string",
           "default": "Warn",
           "enum": [ "None", "Warn", "Pending", "Error" ]
@@ -94,25 +87,35 @@
       }
     },
     "trace": {
-      "description": "Use this section to determine the Reqnroll trace output. For more details see https://go.reqnroll.net/doc-config#trace",
+      "description": "Use this section to determine the SpecFlow trace output. For more details see https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html#trace",
       "type": "object",
       "additionalProperties": true,
       "properties": {
+        "traceSuccessfulSteps": {
+          "description": "Determines whether SpecFlow should trace successful step binding executions.",
+          "type": "boolean",
+          "default": true
+        },
+        "traceTimings": {
+          "description": "Determines whether SpecFlow should trace execution time of the binding methods (only if the execution time is longer than the minTracedDuration value).",
+          "type": "boolean",
+          "default": false
+        },
+        "minTracedDuration": {
+          "description": "Specifies a threshold for tracing the binding execution times. Example: 0:0:0.1 (100 ms)",
+          "type": "string",
+          "default": "0:0:0.1"
+        },
         "stepDefinitionSkeletonStyle": {
           "description": "Specifies the default step definition style.",
           "type": "string",
-          "default": "CucumberExpressionAttribute",
-          "enum": [ "CucumberExpressionAttribute", "RegexAttribute", "MethodNameUnderscores", "MethodNamePascalCase", "MethodNameRegex" ]
-        },
-        "coloredOutput": {
-          "description": "Determine whether Reqnroll should color the test result output.",
-          "type": "boolean",
-          "default": false
+          "default": "RegexAttribute",
+          "enum": [ "RegexAttribute", "MethodNameUnderscores", "MethodNamePascalCase", "MethodNameRegex" ]
         }
       }
     },
-    "bindingAssemblies": {
-      "description": "This section can be used to configure additional assemblies that contain external binding assemblies. The assembly of the Reqnroll project (the project containing the feature files) is automatically included. The binding assemblies must be placed in the output folder (e.g. bin/Debug) of the Reqnroll project, for example by adding a reference to the assembly from the project. For more details see https://go.reqnroll.net/doc-binding-assemblies",
+    "stepAssemblies": {
+      "description": "This section can be used to configure additional assemblies that contain external binding assemblies. The assembly of the SpecFlow project (the project containing the feature files) is automatically included. The binding assemblies must be placed in the output folder (e.g. bin/Debug) of the SpecFlow project, for example by adding a reference to the assembly from the project. For more details see https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html#stepassemblies",
       "type": "array",
       "default": [],
       "items": {
@@ -126,54 +129,19 @@
         }
       }
     },
-    "formatters": {
-      "description": "This section can be used to configure formatters and their specific settings.",
-      "type": "object",
-      "properties": {
-        "html": {
-          "type": "object",
-          "description": "Settings for the HTML formatter.",
-          "properties": {
-            "outputFilePath": {
-              "type": "string",
-              "description": "File path where the HTML report will be output."
-            }
-          },
-          "additionalProperties": true
-        },
-        "message": {
-          "type": "object",
-          "description": "Settings for the message formatter.",
-          "properties": {
-            "outputFilePath": {
-              "type": "string",
-              "description": "File path where the message ndjson output will be saved."
-            }
-          },
-          "additionalProperties": true
-        }
-      },
-      "additionalProperties": {
-        "type": "object",
-        "description": "Configuration options for a custom formatter; arbitrary structure allowed."
-      }
-    },
     "ide": {
       "description": "This section contains all the extension configurations related to the IDE.",
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "reqnroll": {
-          "$ref": "#/definitions/Reqnroll"
+        "specFlow": {
+          "$ref": "#/definitions/SpecFlow"
         },
         "traceability": {
           "$ref": "#/definitions/Traceability"
         },
         "editor": {
           "$ref": "#/definitions/Editor"
-        },
-        "bindingDiscovery": {
-          "$ref": "#/definitions/BindingDiscovery"
         }
       }
     },
@@ -182,26 +150,30 @@
     }
   },
   "definitions": {
-    "Reqnroll": {
-      "description": "Settings related to Reqnroll projects",
+    "SpecFlow": {
+      "description": "Settings related to SpecFlow projects",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "isReqnrollProject": {
-          "description": "Enables the project to be handled as Reqnroll project. (Default: [detect automatically])",
+        "isSpecFlowProject": {
+          "description": "Enables the project to be handled as SpecFlow project. (Default: [detect automatically])",
           "type": "boolean"
         },
+        "generatorFolder": {
+          "description": "The path of the SpecFlow generator folder used by the project, that is usually the 'tools' folder of the SpecFlow NuGet package, e.g. '..\\MyDependencies\\SpecFlow.2.3.0\\tools'. (Default: [detect from the installed SpecFlow NuGet package])",
+          "type": "string"
+        },
         "configFilePath": {
-          "description": "The path of the Reqnroll configuration file (App.config or reqnroll.json) used by the project, e.g. 'reqnroll.json'. (Default: [detect config file automatically])",
+          "description": "The path of the SpecFlow configuration file (App.config or specflow.json) used by the project, e.g. 'specflow.json'. (Default: [detect config file automatically])",
           "type": "string"
         },
         "version": {
-          "description": "The Reqnroll version used by the project, e.g. '2.3.1'. (Default: [detect version automatically])",
+          "description": "The SpecFlow version used by the project, e.g. '2.3.1'. (Default: [detect version automatically])",
           "type": "string",
           "pattern": "^(?:\\.?[0-9]+){2,}(?:\\-[\\-a-z0-9]*)?$"
         },
         "traits": {
-          "description": "The list of the Reqnroll-related project traits. The possible traits are: 'MsBuildGeneration', 'XUnitAdapter', 'DesignTimeFeatureFileGeneration', e.g. '[\"XUnitAdapter\"]'. (Default: [detect from the installed NuGet packages])",
+          "description": "The list of the SpecFlow-related project traits. The possible traits are: 'MsBuildGeneration', 'XUnitAdapter', 'DesignTimeFeatureFileGeneration', e.g. '[\"XUnitAdapter\"]'. (Default: [detect from the installed NuGet packages])",
           "type": "array",
           "items": {
             "enum": [ "None", "MsBuildGeneration", "XUnitAdapter", "DesignTimeFeatureFileGeneration" ]
@@ -297,27 +269,10 @@
               "description": "The number of space characters to be used on each sides as table cell padding.",
               "type": "integer",
               "default": 1
-            },
-            "tableCellRightAlignNumericContent": {
-              "description": "Specifies whether Table cells that contain digits should be right-aligned within the table column.",
-              "type": "boolean",
-              "default": true
             }
           }
         }
       }
-    },
-
-    "BindingDiscovery": {
-      "description": "This section contains all the binding discovery related configurations.",
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "connectorPath": {
-          "description": "A file path for a custom binding connector. The setting might contain environment variable references in %ENV_VAR% format. If a relative path is specified, the default connector folder will be used as a base folder.",
-          "type": "string"
-        }
-      }
-    }
+    } 
   }
 }

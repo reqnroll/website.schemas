@@ -5,12 +5,6 @@
 
   Changelog:
 
-  3.1
-  - Added generator/disableFriendlyTestNames
-
-  3.0
-  - Added formatters
- 
   1.1
   - Added ide/bindingDiscovery
 
@@ -61,11 +55,6 @@
           "items": {
             "type": "string"
           }
-        },
-        "disableFriendlyTestNames": {
-          "description": "By default, Reqnroll generates friendly DisplayNames in test case attributes for supported frameworks. Disable this behavior by setting this option to \"true\".",
-          "type": "boolean",
-          "default": false
         }
       }
     },
@@ -105,9 +94,9 @@
           "enum": [ "CucumberExpressionAttribute", "RegexAttribute", "MethodNameUnderscores", "MethodNamePascalCase", "MethodNameRegex" ]
         },
         "coloredOutput": {
-          "description": "Determine whether Reqnroll should color the test result output.",
-          "type": "boolean",
-          "default": false
+            "description": "Determine whether Reqnroll should color the test result output.",
+            "type": "boolean",
+            "default": false
         }
       }
     },
@@ -124,38 +113,6 @@
             "type": "string"
           }
         }
-      }
-    },
-    "formatters": {
-      "description": "This section can be used to configure formatters and their specific settings.",
-      "type": "object",
-      "properties": {
-        "html": {
-          "type": "object",
-          "description": "Settings for the HTML formatter.",
-          "properties": {
-            "outputFilePath": {
-              "type": "string",
-              "description": "File path where the HTML report will be output."
-            }
-          },
-          "additionalProperties": true
-        },
-        "message": {
-          "type": "object",
-          "description": "Settings for the message formatter.",
-          "properties": {
-            "outputFilePath": {
-              "type": "string",
-              "description": "File path where the message ndjson output will be saved."
-            }
-          },
-          "additionalProperties": true
-        }
-      },
-      "additionalProperties": {
-        "type": "object",
-        "description": "Configuration options for a custom formatter; arbitrary structure allowed."
       }
     },
     "ide": {
@@ -297,11 +254,6 @@
               "description": "The number of space characters to be used on each sides as table cell padding.",
               "type": "integer",
               "default": 1
-            },
-            "tableCellRightAlignNumericContent": {
-              "description": "Specifies whether Table cells that contain digits should be right-aligned within the table column.",
-              "type": "boolean",
-              "default": true
             }
           }
         }

@@ -5,15 +5,6 @@
 
   Changelog:
 
-  3.1
-  - Added generator/disableFriendlyTestNames
-
-  3.0
-  - Added formatters
- 
-  1.1
-  - Added ide/bindingDiscovery
-
   1.0
   - Initial Reqnroll configuration schema
   
@@ -23,7 +14,7 @@
   "additionalProperties": true,
   "properties": {
     "language": {
-      "description": "Use this section to define the default language for feature files and other language-related settings. For more details see https://go.reqnroll.net/doc-config#language",
+      "description": "Use this section to define the default language for feature files and other language-related settings. For more details see https://docs.reqnroll.net/projects/reqnroll/en/latest/Installation/Configuration.html#language",
       "type": "object",
       "additionalProperties": true,
       "properties": {
@@ -40,7 +31,7 @@
       }
     },
     "generator": {
-      "description": "Use this section to define unit test generation options. For more details see https://go.reqnroll.net/doc-config#generator",
+      "description": "Use this section to define unit test generation options. For more details see https://docs.reqnroll.net/projects/reqnroll/en/latest/Installation/Configuration.html#generator",
       "type": "object",
       "additionalProperties": true,
       "properties": {
@@ -55,22 +46,17 @@
           "default": false
         },
         "addNonParallelizableMarkerForTags": {
-          "description": "Defines a set of tags, any of which specify that a feature should be excluded from running in parallel with any other feature. For mor details see https://go.reqnroll.net/doc-parallel-execution",
+          "description": "Defines a set of tags, any of which specify that a feature should be excluded from running in parallel with any other feature. For mor details see https://docs.reqnroll.net/projects/reqnroll/en/latest/Execution/Parallel-Execution.html",
           "type": "array",
           "default": [],
           "items": {
             "type": "string"
           }
-        },
-        "disableFriendlyTestNames": {
-          "description": "By default, Reqnroll generates friendly DisplayNames in test case attributes for supported frameworks. Disable this behavior by setting this option to \"true\".",
-          "type": "boolean",
-          "default": false
         }
       }
     },
     "runtime": {
-      "description": "Use this section to specify various test execution options. For more details see https://go.reqnroll.net/doc-config#runtime",
+      "description": "Use this section to specify various test execution options. For more details see https://docs.reqnroll.net/projects/reqnroll/en/latest/Installation/Configuration.html#runtime",
       "type": "object",
       "additionalProperties": true,
       "properties": {
@@ -94,7 +80,7 @@
       }
     },
     "trace": {
-      "description": "Use this section to determine the Reqnroll trace output. For more details see https://go.reqnroll.net/doc-config#trace",
+      "description": "Use this section to determine the Reqnroll trace output. For more details see https://docs.reqnroll.net/projects/reqnroll/en/latest/Installation/Configuration.html#trace",
       "type": "object",
       "additionalProperties": true,
       "properties": {
@@ -105,9 +91,9 @@
           "enum": [ "CucumberExpressionAttribute", "RegexAttribute", "MethodNameUnderscores", "MethodNamePascalCase", "MethodNameRegex" ]
         },
         "coloredOutput": {
-          "description": "Determine whether Reqnroll should color the test result output.",
-          "type": "boolean",
-          "default": false
+            "description": "Determine whether Reqnroll should color the test result output.",
+            "type": "boolean",
+            "default": false
         }
       }
     },
@@ -126,38 +112,6 @@
         }
       }
     },
-    "formatters": {
-      "description": "This section can be used to configure formatters and their specific settings.",
-      "type": "object",
-      "properties": {
-        "html": {
-          "type": "object",
-          "description": "Settings for the HTML formatter.",
-          "properties": {
-            "outputFilePath": {
-              "type": "string",
-              "description": "File path where the HTML report will be output."
-            }
-          },
-          "additionalProperties": true
-        },
-        "message": {
-          "type": "object",
-          "description": "Settings for the message formatter.",
-          "properties": {
-            "outputFilePath": {
-              "type": "string",
-              "description": "File path where the message ndjson output will be saved."
-            }
-          },
-          "additionalProperties": true
-        }
-      },
-      "additionalProperties": {
-        "type": "object",
-        "description": "Configuration options for a custom formatter; arbitrary structure allowed."
-      }
-    },
     "ide": {
       "description": "This section contains all the extension configurations related to the IDE.",
       "type": "object",
@@ -171,9 +125,6 @@
         },
         "editor": {
           "$ref": "#/definitions/Editor"
-        },
-        "bindingDiscovery": {
-          "$ref": "#/definitions/BindingDiscovery"
         }
       }
     },
@@ -297,27 +248,10 @@
               "description": "The number of space characters to be used on each sides as table cell padding.",
               "type": "integer",
               "default": 1
-            },
-            "tableCellRightAlignNumericContent": {
-              "description": "Specifies whether Table cells that contain digits should be right-aligned within the table column.",
-              "type": "boolean",
-              "default": true
             }
           }
         }
       }
-    },
-
-    "BindingDiscovery": {
-      "description": "This section contains all the binding discovery related configurations.",
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "connectorPath": {
-          "description": "A file path for a custom binding connector. The setting might contain environment variable references in %ENV_VAR% format. If a relative path is specified, the default connector folder will be used as a base folder.",
-          "type": "string"
-        }
-      }
-    }
+    } 
   }
 }
